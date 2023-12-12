@@ -26,3 +26,7 @@
 ### RE_BGRU_2ATT
 
 使用BGRU_2ATT进行RE任务
+
+### CasRel-master
+
+使用CasRel进行RE任务
