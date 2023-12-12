@@ -17,6 +17,7 @@
 
 - ner_czy.py:用于NER_IDCNN_CRF的数据预处理(数据来源为label-studio标记导出的csv文件)
 - re_czy.py:用于RE_BGRU_2ATT的数据预处理(数据来源为label-studio标记导出的json文件)
+- CasRel_data_transform.py:用于CasRel的数据预处理(数据来源为label-studio标记导出的json文件)
 
 ### NER_IDCNN_CRF
 
