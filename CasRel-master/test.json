@@ -1,0 +1,49 @@
+{
+    "text": "中国 消费者 担忧 被 中美 贸易战 殃及   作为 对 特朗普 关税 的 反击 ， 中国 向 美国 大豆 等 商品 征收 报复性 关税 。 官方 媒体 指责 美国 “ 贸易 霸凌 主义 ” ， 消费者 则 对 贸易战 可能 导致 的 进口商品 价格上涨 表示  担忧 。",
+    "triple_list_gold": [],
+    "triple_list_pred": [
+        {
+            "subject": "中国",
+            "relation": "-",
+            "object": "媒体"
+        },
+        {
+            "subject": "中国",
+            "relation": "国家-人物",
+            "object": "特朗普"
+        },
+        {
+            "subject": "中国",
+            "relation": "国家间",
+            "object": "美国"
+        },
+        {
+            "subject": "中国",
+            "relation": "-",
+            "object": "美国"
+        }
+    ],
+    "new": [
+        {
+            "subject": "中国",
+            "relation": "-",
+            "object": "媒体"
+        },
+        {
+            "subject": "中国",
+            "relation": "国家-人物",
+            "object": "特朗普"
+        },
+        {
+            "subject": "中国",
+            "relation": "国家间",
+            "object": "美国"
+        },
+        {
+            "subject": "中国",
+            "relation": "-",
+            "object": "美国"
+        }
+    ],
+    "lack": []
+}

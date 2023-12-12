@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>舆情分析大作业展示</title>
+        <script src="static/js/d3.v3.min.js"></script>
+        <script src="static/js/PVmap_view.js"></script>
+        <script src="static/js/jquery-3.4.1.min.js"></script>
+        <script src="static/js/materialize.min.js"></script>
+        <link rel="stylesheet" href="static/css/materialize.min.css" type="text/css">
+        <link rel="icon" href="static/favicon_1.ico" type="image/x-icon">
+        <link rel="stylesheet" href="static/css/PVmap_view.css" type="text/css">
+        <style>
+            body {
+                background: linear-gradient(90deg, #ffffff, #d2e0f8)
+            }
+    
+            .container {
+                width: 100%;
+                height: 35rem;
+    
+                float: right;
+                display: flex;
+            }
+    
+            .btn_container {
+                width: 100%;
+                height: 10rem;
+                text-align: center;
+            }
+    
+            .btn_container:after {
+                content: '';
+                display: inline-block;
+                height: 100%;
+                vertical-align: middle;
+            }
+    
+            #toast-container {
+                top: 80%;
+                right: 45%;
+            }
+        </style>
+    </head>
+    
+    <b>
+        <nav style="background:#015c77e0">
+            <div class="nav-wrapper">
+                <a href="#" class="brand-logo" style="
+                margin-left: 1rem;
+                font-size: 1.5rem;
+                font-family: KaiTi;">话题-观点图谱可视化</a>
+                <ul id="nav-mobile" class="right hide-on-med-and-down" style="font-family: KaiTi;
+                font-size: 17px;
+                margin-right: 10px;">
+                    <li><span>舆情分析大作业</span></li>
+                    <li><a href="https://github.com/mumuyeye/Public-Opinion-Analysis">Github</a></li>
+    
+                </ul>
+            </div>
+        </nav>
+        <!-- <div id="container" class="container"></div> -->
+    
+        <div class="row" style="
+        margin-top: 10px;
+        display: flex;
+    ">
+            <ul class="collapsible" data-collapsible="accordion" style="
+            margin-left: 4rem;width: 26rem
+        ">
+                <li class="active">
+                    <div class="collapsible-header">文本数据</div>
+                    <div class="collapsible-body" style="display: block;">
+                        <div class="row">
+                            <form class="col s12">
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <textarea id="t6" class="materialize-textarea"
+                                            style="border-bottom: 0px;width: 24rem;"></textarea>
+                                        <label for="textarea1">请输入文本</label>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </li>
+                <li class="active">
+                    <div class="collapsible-header">实体数据</div>
+                    <div class="collapsible-body" style="display: block;">
+                        <div class="row">
+                            <form class="col s12">
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <textarea id="t1" class="materialize-textarea"
+                                            style="border-bottom: 0px;width: 24rem;"></textarea>
+                                        <label for="textarea1">得到的实体数据</label>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </li>
+                <li class="active">
+                    <div class="collapsible-header">关系数据</div>
+                    <div class="collapsible-body" style="display: block;">
+                        <div class="row">
+                            <form class="col s12">
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                        <textarea id="t2" class="materialize-textarea"
+                                            style="border-bottom: 0px;width: 24rem;"></textarea>
+                                        <label for="textarea1">得到的关系数据</label>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </li>
+                <li class="btn_container">
+                    <a class="waves-effect waves-light btn-large" onclick="toGetData()" style="cursor: pointer">实体&关系抽取</a>
+                </li>
+                <li class="btn_container">
+                    <a class="waves-effect waves-light btn-large" href="javascript:render();">话题-观点图谱生成</a>
+                </li>
+            </ul>
+            <div class="col s12 m7" style="
+                float: right;
+                margin-right: 4rem;
+            ">
+                <div class="card">
+    
+                    <div id="container" class="card-image container">
+                        <span class="card-title" style="color: #868181;">Topic&Perspective Graph</span>
+                    </div>
+    
+    
+                    <div class="card-content" style="
+                    background: aliceblue;
+                    font-family: Kaiti;
+                    font-size: 20px;
+                ">
+                        <p>话题-观点图谱可视化</p>
+                    </div>
+                    <div class="card-action">
+                        <a style="
+                        color: #868181;
+                        font-family: Kaiti;
+                        font-size: 18px;
+                    " href="#">小组成员：程子洋 王卓 彭子恒 邵嘉阳 刘虓</a>
+                    <br>
+                    <a style="
+                        color: #868181;
+                        font-family: Kaiti;
+                        font-size: 16px;
+                        float: right;
+                    " href="#">made by: 王卓</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    
+        <script>
+            var t1_text = '{' +
+                '"1": {"name": "外交部","type": "机构"},\n' +
+                '"2": { "name": "华春莹", "type": "人物"},\n' +
+                '"3": {"name": "中国","type": "国家"},\n' +
+                '"4": {"name": "东盟","type": "机构"},\n' +
+                '"5": {"name": "习近平","type": "人物"}\n' +
+                "}"
+
+            document.getElementById("t1").value = t1_text;
+            var t2_text = "[\n" +
+                '{ "source": 1, "target": 2, "rela": "机构-人物", "type": "机构-人物" },\n' +
+                '{ "source": 3, "target": 4, "rela": "国家-机构", "type": "国家-机构" },\n' +
+                '{ "source": 3, "target": 5, "rela": "国家-人物", "type": "国家-人物" },\n' +
+                '{ "source": 4, "target": 3, "rela": "正向", "type": "观点" }\n' +
+                "]"
+
+            document.getElementById("t2").value = t2_text;
+            var t6_text =  
+                '习近平将出席并主持中国东盟建立对话关系30周年纪念峰会,外交部发言人华春莹19日宣布国家主席习近平将于11月22日在北京出席并主持中国东盟建立对话关系30周年纪念峰会,峰会将以视频方式举行。'
+            document.getElementById("t6").value = t6_text;
+    
+    
+            contentHook = function(item){
+                return "<div>"+item.name+"</div>"
+            }
+            //进行话题观点知识图谱的生成
+            function render() {
+                try {
+                    $("svg").remove()
+                    var data = {}
+                    data.nodes = JSON.parse(document.getElementById("t1").value);
+                    data.links = JSON.parse(document.getElementById("t2").value);
+                    var config = {
+                        width: document.getElementById("container").clientWidth,
+                        height: document.getElementById("container").clientHeight
+                    }
+                    initKG(data, config, "#container")
+                } catch (err) {
+                    Materialize.toast('渲染存在异常', 2000)
+                    console.info(err)
+                }
+            }
+            render();
+
+            //点击事件
+            function toGetData(){
+			var val = $("#t6").text(); //文本数据框的内容
+            //去后台调用模型做逻辑操作
+				$.ajax({
+							url:'/api/getInfo',
+							data:{"testdata":val},
+							success:function(data){
+								data = data.replace("\"","").replace("\"","");
+								var back = data;
+                                var allhtml = {};
+                                var allhtml2 = [];
+
+								var temp = back.split("|");
+
+                                for(var i = 0; i < temp.length; i++){
+                                    var htmltemp = temp[i].replace(/[<>]/g, '');
+                                    var parts = htmltemp.split(', ');
+
+                                    var source = parts[0];
+                                    var target = parts[1];
+                                    var rela = parts[2];
+                                    var type = "";
+
+                                    if (rela.includes("国家")) {
+                                        type = "国家";
+                                    } else if (rela.includes("人物")) {
+                                        type = "人物";
+                                    } else if (rela.includes("机构")) {
+                                        type = "机构";
+                                    } else if (rela.includes("+")) {
+                                        type = "正向"
+                                    } else if (rela.includes("-")) {
+                                        type = "负向"
+                                    } else if (rela.includes("?")) {
+                                        type = "中立"
+                                    }
+
+                                    allhtml2.push({
+                                        "source": source,
+                                        "target": target,
+                                        "rela": rela,
+                                        "type": type
+                                    });
+
+                                    if (!(source in allhtml)) {
+                                        allhtml[source] = {"name": source, "type": type};
+                                    }
+
+                                    if (!(target in allhtml)) {
+                                        allhtml[target] = {"name": target, "type": type};
+                                    }
+                                }   
+
+                                allhtml = Object.values(allhtml);
+
+                                $("#t1").html(allhtml);
+							    $("#t2").html(allhtml2);
+							},
+						})
+            //将文本传给节点数据和关系数据框的内容
+		}
+        </script>
+</html>
