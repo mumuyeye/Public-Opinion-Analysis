@@ -23,3 +23,5 @@
 使用IDCNN进行NER任务
 
 ### RE_BGRU_2ATT
+
+使用BGRU_2ATT进行RE任务
