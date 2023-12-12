@@ -9,7 +9,7 @@
 
 ### 实验运行
 
-实验数据在CasRel/data/MYDATA文件夹里，分为train_triples.json、dev_triples.json、test_triples.json三个文件。文件夹中trainsfrom.py可以根据label-studio导出的json文件得到以上三个文件。
+实验数据在data/MYDATA文件夹里，分为train_triples.json、dev_triples.json、test_triples.json三个文件。文件夹中trainsfrom.py可以根据label-studio导出的json文件得到以上三个文件。
 
 1. 训练模型
 
@@ -23,4 +23,4 @@ python run.py --train=True --dataset=MYDATA
 python run.py --dataset=MYDATA
 ```
 
-模型运行结果在CasRel/results/MYDATA/test_results.json中。
+模型运行结果在results/MYDATA/test_results.json中。
