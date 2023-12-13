@@ -29,4 +29,5 @@
 
 ### CasRel-master
 
-使用CasRel进行RE任务
+* 使用CasRel进行Joint Extraction of Entities and Relations(实体关系联合抽取)任务
+* 设计前后端实现网页demo展示
