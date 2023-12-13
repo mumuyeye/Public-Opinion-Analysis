@@ -5,18 +5,18 @@ import jieba
 def convert_format(data_list):
     converted_data_list = []
 
-    for data in data_list: # 逐条提取数据
+    for data in data_list:
         sentences = [' '.join(jieba.cut(sentence, cut_all=False)) for sentence in data["data"]["text"].split("\n") if
-                     sentence.strip()] # 对文本进行分词
+                     sentence.strip()]
 
-        ner = [] # 定义实体
-        relations = [] # 定义关系
+        ner = []
+        relations = []
 
         entity_map = {}
 
         rows = 1000
         cols = 1000
-        array_2d = [['' for j in range(cols)] for i in range(rows)] # 构建单词表，方便找到对应单词
+        array_2d = [['' for j in range(cols)] for i in range(rows)]
 
         for annotation in data["annotations"]:
             ner_annotation = []
@@ -27,10 +27,11 @@ def convert_format(data_list):
                     end = entity["value"]["end"]
                     label = entity["value"]["labels"][0]
                     entity_map[entity_id] = {"start": start, "end": end}
-                    array_2d[start][end] = entity["value"]["text"] # 构建单词表
+                    array_2d[start][end] = entity["value"]["text"]
                     ner_annotation.append([start, end, label])
             ner.append(ner_annotation)
 
+            # relation_annotation = []
             for relation in annotation["result"]:
                 if "relation" in relation["type"]:
                     relation_type = relation["labels"]
@@ -42,7 +43,6 @@ def convert_format(data_list):
                         from_end = entity_map[from_id]["end"]
                         to_start = entity_map[to_id]["start"]
                         to_end = entity_map[to_id]["end"]
-                    # 生成“triple_list”中的关系列表
                     if len(relation_type) == 1:
                         if relation_type[0] == '？':
                             relations.append([array_2d[from_start][from_end], "?", array_2d[to_start][to_end]])
@@ -57,6 +57,9 @@ def convert_format(data_list):
                             relations.append([array_2d[from_start][from_end], "?", array_2d[to_start][to_end]])
                         else:
                             relations.append([array_2d[from_start][from_end], relation_type[1], array_2d[to_start][to_end]])
+
+        # indexed_sentences = [{"index": int(data['id']), "sentence": sentence} for sentence in sentences]
+
 
         # 将分词后的句子连接成一个字符串
         sentences = ' '.join(sentences)
@@ -101,8 +104,8 @@ converted_data_list = convert_format(input_data_list)
     # json.dump(converted_data_list, output_file, ensure_ascii=False, indent=1, default=convert_to_json, separators=(',', ': '))
 # 分割数据
 train_data = converted_data_list
-test_data = converted_data_list[:100]
-dev_data = converted_data_list[100:150]
+test_data = converted_data_list[:1000]
+dev_data = converted_data_list[1000:1500]
 
 # 写入 train_triples.json
 with open("train_triples.json", "w", encoding="utf-8") as train_file:
