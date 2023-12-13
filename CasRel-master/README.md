@@ -1,15 +1,15 @@
-## A Novel Cascade Binary Tagging Framework for Relational Triple Extraction
+# A Novel Cascade Binary Tagging Framework for Relational Triple Extraction
 
-### 实验环境
+## Requrements
 
-- tqdm
-- codecs
-- keras-bert = 0.80.0
-- tensorflow-gpu = 1.13.1
+* tqdm
+* codecs
+* keras-bert = 0.80.0
+* tensorflow-gpu = 1.13.1
 
-### 实验运行
+## Usage
 
-实验数据在data/MYDATA文件夹里，分为train_triples.json、dev_triples.json、test_triples.json三个文件。文件夹中trainsfrom.py可以根据label-studio导出的json文件得到以上三个文件。
+实验数据在data/MYDATA文件夹里，分为train_triples.json、dev_triples.json、test_triples.json三个文件。文件夹中trainsfrom.py可以实现将label-studio导出的json文件转换为以上三个文件的数据格式。
 
 1. 训练模型
 
