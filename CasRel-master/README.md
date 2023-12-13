@@ -1,11 +1,16 @@
 # A Novel Cascade Binary Tagging Framework for Relational Triple Extraction
 
-## Requrements
+## Requirements
 
 * tqdm
 * codecs
 * keras-bert = 0.80.0
 * tensorflow-gpu = 1.13.1
+
+在终端运行下面命令进行环境配置
+```bash
+pip install -r requirements.txt
+```
 
 ## Usage
 
@@ -22,5 +27,18 @@ python run.py --train=True --dataset=MYDATA
 ```shell
 python run.py --dataset=MYDATA
 ```
-
+输出*Precision*、*recall*、*F1-score*等模型metric<br>
 模型运行结果在results/MYDATA/test_results.json中。
+
+```bash
+python test.py
+```
+输入文本，得到<entity， entity， relation>三元组结果
+
+3. 网页demo展示
+
+```bash
+python app.py
+```
+
+
